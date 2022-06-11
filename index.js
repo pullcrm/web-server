@@ -1,5 +1,7 @@
 // This is a simple Node server that uses the built project.
 
+require('dotenv').config()
+
 global.fetch = require('node-fetch')
 const path = require('path')
 const express = require('express')
@@ -44,6 +46,6 @@ server.get('*', async (request, response) => {
   response.end(html)
 })
 
-const port = 8080
-console.log(`Server started: http://localhost:${port}`)
-server.listen(port)
+console.log(process.env.PORT)
+
+server.listen(process.env.PORT || 8080)
