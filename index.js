@@ -19,11 +19,18 @@ const { default: renderPage } = require(`${dist}/server`)
 
 const server = express()
 
+const MAX_AGE_ASSETS = 30 * 24 * 60 * 60 * 1000 // 30 days
+const MAX_AGE_DEFAULT = 1 * 60 * 60 * 1000 // 1 hour
+
 // Serve every static asset route
 for (const asset of ssr.assets || []) {
+  const maxAge = asset === 'assets'
+    ? MAX_AGE_ASSETS
+    : MAX_AGE_DEFAULT
+
   server.use(
     '/' + asset,
-    express.static(path.join(__dirname, `${dist}/client/` + asset))
+    express.static(path.join(__dirname, `${dist}/client/` + asset), { maxAge })
   )
 }
 
