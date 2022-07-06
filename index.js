@@ -19,6 +19,8 @@ const { default: renderPage } = require(`${dist}/server`)
 
 const server = express()
 
+server.disable('x-powered-by')
+
 const MAX_AGE_ASSETS = 30 * 24 * 60 * 60 * 1000 // 30 days
 const MAX_AGE_DEFAULT = 1 * 60 * 60 * 1000 // 1 hour
 
@@ -30,7 +32,7 @@ for (const asset of ssr.assets || []) {
 
   server.use(
     '/' + asset,
-    express.static(path.join(__dirname, `${dist}/client/` + asset), { maxAge })
+    express.static(path.join(__dirname, `${dist}/client/` + asset), { maxAge, redirect: false })
   )
 }
 
