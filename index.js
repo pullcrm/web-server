@@ -37,7 +37,7 @@ for (const asset of ssr.assets || []) {
 }
 
 // Everything else is treated as a "rendering request"
-server.get(':path([A-Za-z/])', async (request, response) => {
+server.get('*', async (request, response) => {
   const url =
     request.protocol + '://' + request.get('host') + request.originalUrl
 
